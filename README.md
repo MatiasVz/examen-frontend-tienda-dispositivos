@@ -1,59 +1,121 @@
-# Web6PAGINA
+# Examen Frontend Tienda de Dispositivos
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+Este proyecto es una aplicación web desarrollada en Angular para la gestión de una tienda de dispositivos electrónicos. Permite la administración de empresas, usuarios, login, visualización de productos, contacto y gestión de redes sociales, entre otras funcionalidades.
 
-## Development server
+## Características principales
 
-To start a local development server, run:
+- **Login de usuarios** con validación y control de acceso.
+- **Panel de administración** para gestionar empresas y usuarios.
+- **Edición y visualización de datos de la empresa**.
+- **Gestión de usuarios** (crear, editar, eliminar).
+- **Gestión de redes sociales** en el pie de página.
+- **Página de inicio** con banner y encabezado.
+- **Página de contacto** (simulada o con integración a EmailJS).
+- **Pruebas automatizadas** de frontend con Jest.
+- **Diseño responsivo** y componentes reutilizables.
+
+## Estructura del proyecto
+
+```
+src/
+├── app/
+│   ├── admin/
+│   │   ├── dashboard-component/
+│   │   ├── empresa-component/
+│   │   └── usuario-component/
+│   ├── componentes/
+│   │   ├── banner/
+│   │   ├── encabezado/
+│   │   ├── menu/
+│   │   └── pie-pagina/
+│   ├── login/
+│   │   └── login-component/
+│   ├── modelos/
+│   ├── paginas/
+│   │   ├── contactos/
+│   │   └── inicio/
+│   ├── servicios/
+│   │   ├── auth-service.ts
+│   │   ├── empresa-servicio.ts
+│   │   └── usuario-service.ts
+│   └── app.config.ts
+├── assets/
+├── environment.ts
+└── main.ts
+```
+
+## Instalación
+
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/tu-usuario/examen-frontend-tienda-dispositivos.git
+   cd examen-frontend-tienda-dispositivos
+   ```
+
+2. **Instala las dependencias:**
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+
+## Uso
+
+### Servidor de desarrollo
+
+Inicia el servidor de desarrollo con:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Luego abre tu navegador en [http://localhost:4200/](http://localhost:4200/).
 
-## Code scaffolding
+### Construcción del proyecto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+Para compilar el proyecto para producción:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos generados estarán en la carpeta `dist/`.
 
-## Running unit tests
+### Pruebas unitarias
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+El proyecto utiliza **Jest** para pruebas unitarias. Ejecuta:
 
 ```bash
-ng e2e
+npm run test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Esto ejecutará las pruebas automatizadas de frontend, incluyendo:
+- Login
+- Edición de empresa
+- Gestión de usuarios
+- Gestión de redes sociales
 
-## Additional Resources
+### Pruebas end-to-end
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Actualmente no se incluye un framework e2e por defecto. Puedes agregar [Cypress](https://www.cypress.io/) o [Playwright](https://playwright.dev/) si lo necesitas.
+
+## Configuración de EmailJS (opcional)
+
+Si deseas habilitar el envío de correos desde la página de contacto, instala la dependencia y configura tus credenciales en el archivo correspondiente:
+
+```bash
+npm install @emailjs/browser --legacy-peer-deps
+```
+
+Edita `src/app/paginas/contactos/contactos.ts` con tus datos de servicio.
+
+## Scripts útiles
+
+- `ng serve` — Inicia el servidor de desarrollo.
+- `ng build` — Compila el proyecto para producción.
+- `npm run test` — Ejecuta las pruebas unitarias con Jest.
+
+## Requisitos
+
+- Node.js >= 18.x
+- Angular CLI >= 20.x
+- TypeScript >= 5.8.x < 5.9.x
+
