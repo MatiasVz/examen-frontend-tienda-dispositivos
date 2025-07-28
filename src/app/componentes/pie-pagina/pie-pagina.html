@@ -1,0 +1,189 @@
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h5 class="text-white">{{ footer?.empresa?.nombreComercial || 'TechStore' }}</h5>
+        <p class="text-white">{{ footer?.descripcion || 'Tu tienda de tecnología de confianza' }}</p>
+        <p class="text-white"><i class="fas fa-phone text-white"></i> {{ footer?.telefono || 'Teléfono no disponible' }}</p>
+      </div>
+      <div class="col-md-6">
+        <h5 class="text-white">Síguenos</h5>
+        <div class="d-flex gap-3">
+          <a *ngFor="let red of redesSociales" [href]="red.url" target="_blank" class="text-white">
+            <i class="fab fa-{{ red.nombre.toLowerCase() }} fa-2x text-white"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4 border-white">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p class="mb-0 text-white">&copy; {{ footer?.ano || currentYear }} {{ footer?.empresa?.nombreComercial || 'TechStore' }}. Todos los derechos reservados.</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <!-- Botón de administración solo visible para admins -->
+        <button 
+          *ngIf="isAdmin" 
+          type="button" 
+          class="btn btn-outline-light btn-sm text-white" 
+          data-bs-toggle="modal" 
+          data-bs-target="#modificarBannerModal">
+          <i class="fas fa-cog text-white"></i> Administrar Footer
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal Bootstrap para Modificar Banner -->
+<div class="modal fade" id="modificarBannerModal" tabindex="-1" aria-labelledby="modificarBannerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title text-white" id="modificarBannerModalLabel">Opciones de Footer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body d-flex flex-column gap-2">
+        <button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#footerModal" data-bs-dismiss="modal">Agregar Footer</button>
+        <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#redSocialModal" data-bs-dismiss="modal">Agregar Red Social</button>
+        <button class="btn btn-warning text-dark" (click)="abrirEditarFooter()">Editar Footer</button>
+        <button class="btn btn-outline-warning text-dark" (click)="abrirEditarRedSocial()">Editar Red Social</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Agregar Footer -->
+<div class="modal fade" id="footerModal" tabindex="-1" aria-labelledby="footerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title text-white" id="footerModalLabel">Agregar Footer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form (ngSubmit)="guardarFooter()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" [(ngModel)]="nuevoFooter.descripcion" name="descripcion" required>
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" [(ngModel)]="nuevoFooter.telefono" name="telefono" required>
+          </div>
+          <div class="mb-3">
+            <label for="ano" class="form-label">Año</label>
+            <input type="number" class="form-control" id="ano" [(ngModel)]="nuevoFooter.ano" name="ano" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-info text-white">Guardar Footer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Editar Footer -->
+<div class="modal fade" id="editarFooterModal" tabindex="-1" aria-labelledby="editarFooterModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title text-dark" id="editarFooterModalLabel">Editar Footer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form (ngSubmit)="actualizarFooter()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editDescripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="editDescripcion" [(ngModel)]="footerEdit.descripcion" name="editDescripcion" required>
+          </div>
+          <div class="mb-3">
+            <label for="editTelefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="editTelefono" [(ngModel)]="footerEdit.telefono" name="editTelefono" required>
+          </div>
+          <div class="mb-3">
+            <label for="editAno" class="form-label">Año</label>
+            <input type="number" class="form-control" id="editAno" [(ngModel)]="footerEdit.ano" name="editAno" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-warning text-dark">Actualizar Footer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Agregar Red Social -->
+<div class="modal fade" id="redSocialModal" tabindex="-1" aria-labelledby="redSocialModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title text-white" id="redSocialModalLabel">Agregar Red Social</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form (ngSubmit)="guardarRedSocial()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombreRed" class="form-label">Nombre de la Red Social</label>
+            <select class="form-select" id="nombreRed" [(ngModel)]="nuevaRedSocial.nombre" name="nombreRed" required>
+              <option value="">Seleccionar...</option>
+              <option value="facebook">Facebook</option>
+              <option value="twitter">Twitter</option>
+              <option value="instagram">Instagram</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="youtube">YouTube</option>
+              <option value="tiktok">TikTok</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="urlRed" class="form-label">URL</label>
+            <input type="url" class="form-control" id="urlRed" [(ngModel)]="nuevaRedSocial.url" name="urlRed" required placeholder="https://...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-info text-white">Guardar Red Social</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Editar Red Social -->
+<div class="modal fade" id="editarRedSocialModal" tabindex="-1" aria-labelledby="editarRedSocialModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title text-dark" id="editarRedSocialModalLabel">Editar Red Social</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form (ngSubmit)="actualizarRedSocial()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editNombreRed" class="form-label">Red Social</label>
+            <select class="form-select" id="editNombreRed" [(ngModel)]="redSocialEdit.nombre" name="editNombreRed" required>
+              <option value="facebook">Facebook</option>
+              <option value="twitter">Twitter</option>
+              <option value="instagram">Instagram</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="youtube">YouTube</option>
+              <option value="tiktok">TikTok</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="editUrlRed" class="form-label">URL</label>
+            <input type="url" class="form-control" id="editUrlRed" [(ngModel)]="redSocialEdit.url" name="editUrlRed" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-warning text-dark">Actualizar Red Social</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

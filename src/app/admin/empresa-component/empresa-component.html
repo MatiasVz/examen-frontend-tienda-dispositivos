@@ -1,0 +1,49 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header bg-info text-white text-center">
+      <h2 class="mb-0 text-white"><i class="fa fa-building"></i> Editar Empresa</h2>
+    </div>
+    <form (ngSubmit)="guardarCambios()" class="card-body bg-light">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Nombre:</label>
+        <input [(ngModel)]="empresa.nombre" name="nombre" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Logo:</label>
+        <input [(ngModel)]="empresa.logo" name="logo" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Misión:</label>
+        <textarea [(ngModel)]="empresa.mision" name="mision" class="form-control"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Visión:</label>
+        <textarea [(ngModel)]="empresa.vision" name="vision" class="form-control"></textarea>
+      </div>
+      <div class="mb-4">
+        <h3 class="text-info"><i class="fa fa-image"></i> Banners</h3>
+        <hr>
+        <button type="button" (click)="agregarBanner()" class="btn btn-info text-white mb-3"><i class="fa fa-plus"></i> Agregar Banner</button>
+        <div *ngFor="let banner of empresa?.banners; let i = index" class="card mb-3 border-info">
+          <div class="card-body row g-3 align-items-center">
+            <div class="col-md-5">
+              <label class="form-label">URL:</label>
+              <input [(ngModel)]="banner.url" name="url{{i}}" class="form-control" />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label">Descripción:</label>
+              <input [(ngModel)]="banner.descripcion" name="descripcion{{i}}" class="form-control" />
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button type="button" (click)="quitarBanner(i)" class="btn btn-outline-danger w-100"><i class="fa fa-trash"></i> Quitar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-info text-white fw-bold"><i class="fa fa-save"></i> Guardar Cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+

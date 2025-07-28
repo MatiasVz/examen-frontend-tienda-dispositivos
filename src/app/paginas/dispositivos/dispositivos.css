@@ -1,0 +1,47 @@
+.filtros-container {
+  border: 4px solid #F59E0B !important;
+  border-radius: 1.5rem !important;
+  background: linear-gradient(135deg, #FFF7E0 0%, #FEF3C7 100%) !important;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.18) !important;
+  padding: 2rem 1.5rem !important;
+  margin-bottom: 2rem !important;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.filtros-container:hover {
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.25) !important;
+  border-color: #D97706 !important;
+}
+
+/* Inputs y selects */
+.filtros-container select,
+.filtros-container input {
+  border: 2.5px solid #F59E0B !important;
+  border-radius: 0.9rem !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1rem !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #FFF !important;
+}
+
+.filtros-container select:focus,
+.filtros-container input:focus {
+  border-color: #D97706 !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18) !important;
+}
+
+/* Botón de limpiar filtros */
+.filtros-container .btn {
+  border: 2.5px solid #F59E0B !important;
+  color: #F59E0B !important;
+  background: #FFF !important;
+  border-radius: 0.9rem !important;
+  font-weight: 600 !important;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.filtros-container .btn:hover {
+  background: #EF4444 !important; /* rojo */
+  color: #FFF !important;
+  border-color: #EF4444 !important;
+}

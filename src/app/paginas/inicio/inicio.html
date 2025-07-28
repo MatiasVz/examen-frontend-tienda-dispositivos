@@ -1,0 +1,116 @@
+
+<!-- Hero/banner de bienvenida -->
+<section class="hero-section mb-5">
+  <div class="container text-center py-5">
+    <h1 class="display-3 fw-bold mb-3" style="color:#1F2937;">
+      ¡Bienvenido a <span style="color:#F59E0B;">TechStore</span>!
+    </h1>
+    <p class="lead mb-4 text-muted">
+      Tu tienda de tecnología de confianza. Descubre los mejores productos, atención personalizada y la innovación que nos distingue.
+    </p>
+    <!-- Botones eliminados según tu pedido -->
+  </div>
+</section>
+
+<!-- Características destacadas -->
+<section class="features-section mb-5">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-md-3">
+        <div class="feature-card p-4 rounded-3 shadow-sm h-100 bg-white">
+          <div class="feature-icon mb-3" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:white;width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin:auto;">
+            <i class="fas fa-shipping-fast fa-lg"></i>
+          </div>
+          <h5 class="fw-bold mb-2" style="color:#1F2937;">Envío Rápido</h5>
+          <p class="text-muted mb-0">Entrega en 24-48 horas en toda la región.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-card p-4 rounded-3 shadow-sm h-100 bg-white">
+          <div class="feature-icon mb-3" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:white;width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin:auto;">
+            <i class="fas fa-shield-alt fa-lg"></i>
+          </div>
+          <h5 class="fw-bold mb-2" style="color:#1F2937;">Garantía Total</h5>
+          <p class="text-muted mb-0">Protección completa en todos nuestros productos.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-card p-4 rounded-3 shadow-sm h-100 bg-white">
+          <div class="feature-icon mb-3" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:white;width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin:auto;">
+            <i class="fas fa-headset fa-lg"></i>
+          </div>
+          <h5 class="fw-bold mb-2" style="color:#1F2937;">Soporte 24/7</h5>
+          <p class="text-muted mb-0">Atención personalizada cuando lo necesites.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-card p-4 rounded-3 shadow-sm h-100 bg-white">
+          <div class="feature-icon mb-3" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:white;width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin:auto;">
+            <i class="fas fa-award fa-lg"></i>
+          </div>
+          <h5 class="fw-bold mb-2" style="color:#1F2937;">Calidad Premium</h5>
+          <p class="text-muted mb-0">Solo trabajamos con las mejores marcas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Estadísticas rápidas -->
+<section class="stats-section mb-5">
+  <div class="container">
+    <div class="row text-center text-dark">
+      <div class="col-md-3 mb-3">
+        <div>
+          <i class="fas fa-users fa-2x mb-2" style="color:#F59E0B;"></i>
+          <h3 class="fw-bold mb-1">5000+</h3>
+          <p class="mb-0 text-muted">Clientes Satisfechos</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div>
+          <i class="fas fa-laptop fa-2x mb-2" style="color:#F59E0B;"></i>
+          <h3 class="fw-bold mb-1">1200+</h3>
+          <p class="mb-0 text-muted">Productos Vendidos</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div>
+          <i class="fas fa-calendar-alt fa-2x mb-2" style="color:#F59E0B;"></i>
+          <h3 class="fw-bold mb-1">10+</h3>
+          <p class="mb-0 text-muted">Años de Experiencia</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div>
+          <i class="fas fa-star fa-2x mb-2" style="color:#F59E0B;"></i>
+          <h3 class="fw-bold mb-1">4.9</h3>
+          <p class="mb-0 text-muted">Calificación Promedio</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container my-5">
+  <div class="row justify-content-center g-4">
+    <div class="col-md-5">
+      <div class="card border-warning shadow h-100" style="border-color: #F59E0B !important;">
+        <div class="card-body text-center">
+          <div class="display-4 mb-2" style="color: #F59E0B;"><i class="fa fa-bullseye"></i></div>
+          <h3 class="card-title fw-bold" style="color: #F59E0B;">Misión</h3>
+          <p class="card-text text-dark">{{ empresa?.mision }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card border-warning shadow h-100" style="border-color: #F59E0B !important;">
+        <div class="card-body text-center">
+          <div class="display-4 mb-2" style="color: #F59E0B;"><i class="fa fa-eye"></i></div>
+          <h3 class="card-title fw-bold" style="color: #F59E0B;">Visión</h3>
+          <p class="card-text text-dark">{{ empresa?.vision }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

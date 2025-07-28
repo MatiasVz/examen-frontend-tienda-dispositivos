@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <!-- LOGO RESTAURADO -->
+    <a class="navbar-brand" routerLink="/">
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-home me-2"></i>INICIO
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dispositivos" routerLinkActive="active">
+            <i class="fas fa-mobile-alt me-2"></i>PRODUCTOS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contactos" routerLinkActive="active">
+            <i class="fas fa-envelope me-2"></i>CONTACTOS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/nosotros" routerLinkActive="active">
+            <i class="fas fa-users me-2"></i>NOSOTROS
+          </a>
+        </li>
+        
+        <!-- MENÚS ADMINISTRATIVOS - Solo para Admin - ARREGLADO -->
+        <ng-container *ngIf="isLoggedIn && isAdmin()">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-cogs me-2"></i>ADMINISTRACIÓN
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+              <li><a class="dropdown-item" routerLink="/admin/usuarios">
+                <i class="fas fa-users me-2"></i>Gestionar Usuarios
+              </a></li>
+              <li><a class="dropdown-item" routerLink="/admin/empresa">
+                <i class="fas fa-building me-2"></i>Gestionar Empresa
+              </a></li>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+      
+      <div class="navbar-nav">
+        <ng-container *ngIf="isLoggedIn; else loginBtn">
+          <span class="nav-link">
+            <i class="fas fa-user me-2"></i>
+            Bienvenido, {{ username }}
+            <span class="badge bg-light" *ngIf="userType">{{ getUserTypeLabel() }}</span>
+          </span>
+          <button class="btn btn-outline-light ms-2" (click)="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i>SALIR
+          </button>
+        </ng-container>
+        
+        <ng-template #loginBtn>
+          <a class="btn btn-outline-light" routerLink="/login">
+            <i class="fas fa-sign-in-alt me-2"></i>LOGIN
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>

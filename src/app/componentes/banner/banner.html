@@ -1,0 +1,8 @@
+<div *ngIf="empresa?.banners?.[slideIndex] as banner">
+  <div class="position-relative w-100" style="margin-left:0;margin-right:0;">
+    <img [src]="banner.url" alt="Banner" class="w-100 d-block" style="max-height: 320px; object-fit: cover;">
+    <div class="position-absolute top-50 start-50 translate-middle px-4 py-2 rounded shadow" style="background: rgba(0,0,0,0.45); min-width: 300px;">
+      <h2 class="text-white text-center m-0">{{ banner.descripcion }}</h2>
+    </div>
+  </div>
+</div>

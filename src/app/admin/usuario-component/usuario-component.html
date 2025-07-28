@@ -1,0 +1,55 @@
+<div class="container my-5">
+  <h2 class="text-info text-center mb-4"><i class="fa fa-users"></i> Gestión de Usuarios</h2>
+  <form (ngSubmit)="guardarUsuario()" #formUsuario="ngForm" class="card shadow p-4 mb-4 bg-light border-0">
+    <div class="mb-3">
+      <input [(ngModel)]="usuarioSeleccionado.nombre" name="nombre" placeholder="Nombre" required class="form-control">
+    </div>
+    <div class="mb-3">
+      <input [(ngModel)]="usuarioSeleccionado.apellido" name="apellido" placeholder="Apellido" required class="form-control">
+    </div>
+    <div class="mb-3">
+      <input [(ngModel)]="usuarioSeleccionado.telefono" name="telefono" placeholder="Teléfono" class="form-control">
+    </div>
+    <div class="mb-3">
+      <input [(ngModel)]="usuarioSeleccionado.username" name="username" placeholder="Usuario" required class="form-control">
+    </div>
+    <div class="mb-3">
+      <input [(ngModel)]="usuarioSeleccionado.password" name="password" placeholder="Contraseña" required type="password" class="form-control">
+    </div>
+    <div class="mb-3">
+      <input [(ngModel)]="usuarioSeleccionado.estaActivo" name="estaActivo" type="number" placeholder="Activo (1 o 0)" class="form-control">
+    </div>
+    <div class="mb-3">
+      <select [(ngModel)]="usuarioSeleccionado.tipoUsuario" name="tipoUsuario" required class="form-select">
+        <option *ngFor="let tipo of tiposUsuario" [ngValue]="tipo">
+          {{ tipo.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="d-flex gap-2 justify-content-end">
+      <button type="submit" class="btn btn-info text-white fw-bold">
+        <i class="fa" [ngClass]="editando ? 'fa-save' : 'fa-plus'" aria-hidden="true"></i>
+        {{ editando ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" (click)="resetFormulario()" class="btn btn-outline-secondary fw-bold">
+        <i class="fa fa-eraser" aria-hidden="true"></i> Limpiar
+      </button>
+    </div>
+  </form>
+
+  <hr>
+
+  <h3 class="text-info text-center mb-4"><i class="fa fa-list"></i> Lista de Usuarios</h3>
+  <ul class="list-unstyled">
+    <li *ngFor="let usuario of usuarios" class="card mb-3 bg-light border-0 shadow-sm p-3 d-flex flex-row align-items-center justify-content-between">
+      <div>
+        <span class="fw-bold text-info"><i class="fa fa-user-circle"></i> {{ usuario.nombre }} {{ usuario.apellido }}</span><br>
+        <span class="text-muted small">- {{ usuario.username }}</span>
+      </div>
+      <button (click)="seleccionarUsuario(usuario)" class="btn btn-outline-info fw-bold">
+        <i class="fa fa-edit"></i> Editar
+      </button>
+    </li>
+  </ul>
+</div>
+

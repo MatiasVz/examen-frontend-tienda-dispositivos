@@ -1,0 +1,215 @@
+<!-- Banner principal -->
+<section class="mb-4"></section>
+
+<!-- Filtros -->
+<div class="filtros-container mb-4">
+  <div class="row g-3 align-items-end">
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="filtros.categoria" (change)="aplicarFiltros()">
+        <option value="">Todas las categorías</option>
+        <option *ngFor="let cat of categoriasDisponibles" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="filtros.marca" (change)="aplicarFiltros()">
+        <option value="">Todas las marcas</option>
+        <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <input type="text" class="form-control" placeholder="Modelo" [(ngModel)]="filtros.modelo" (input)="aplicarFiltros()">
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="filtros.precioRango" (change)="aplicarFiltros()">
+        <option value="">Todos los precios</option>
+        <option *ngFor="let rango of rangosPrecio" [value]="rango">{{ rango }}</option>
+      </select>
+    </div>
+    <div class="col-12 text-end mt-2">
+      <button class="btn btn-outline-secondary btn-sm" (click)="limpiarFiltros()">
+        Limpiar filtros
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Sección para agregar nuevo dispositivo -->
+<div *ngIf="modoAgregar" class="card shadow mb-4">
+  <div class="card-header bg-info text-white">Agregar Nuevo Dispositivo</div>
+  <div class="card-body">
+    <form>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nombre:</label>
+          <input type="text" [(ngModel)]="nuevoDispositivo.nombre" class="form-control" name="nombre">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Categoría:</label>
+          <input type="text" [(ngModel)]="nuevoDispositivo.categoria" class="form-control" name="categoria">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Marca:</label>
+          <input type="text" [(ngModel)]="nuevoDispositivo.marca" class="form-control" name="marca">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Modelo:</label>
+          <input type="text" [(ngModel)]="nuevoDispositivo.modelo" class="form-control" name="modelo">
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Descripción:</label>
+          <textarea [(ngModel)]="nuevoDispositivo.descripcion" class="form-control" rows="2" name="descripcion"></textarea>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Precio:</label>
+          <input type="number" [(ngModel)]="nuevoDispositivo.precio" class="form-control" name="precio">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Stock:</label>
+          <input type="number" [(ngModel)]="nuevoDispositivo.stock" class="form-control" name="stock">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Estado:</label>
+          <select [(ngModel)]="nuevoDispositivo.estado" class="form-select" name="estado">
+            <option [value]="1">Activo</option>
+            <option [value]="0">Inactivo</option>
+          </select>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Imágenes:</label>
+          <div *ngFor="let imagen of nuevoDispositivo.imagenes; let i = index" class="input-group mb-2">
+            <input type="text" [(ngModel)]="imagen.url" placeholder="URL/Base64 de la imagen" class="form-control" name="img-{{i}}">
+            <button type="button" (click)="quitarImagenNuevoDispositivo(i)" class="btn btn-danger">Quitar</button>
+          </div>
+          <button type="button" (click)="agregarImagenNuevoDispositivo()" class="btn btn-outline-info btn-sm">Agregar Imagen</button>
+        </div>
+      </div>
+      <div class="mt-4 d-flex gap-2">
+        <button type="button" (click)="agregarDispositivo()" class="btn btn-info text-white">Guardar Dispositivo</button>
+        <button type="button" (click)="abrirCerrarModalAgregar()" class="btn btn-outline-secondary">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Botón para agregar producto (solo para usuarios con permisos) -->
+<div class="d-flex justify-content-end mb-3" *ngIf="tipoUsuario === 1 || tipoUsuario === 2">
+  <button class="btn btn-info fw-bold text-white me-2" (click)="abrirCerrarModalAgregar()">
+    <i class="fa fa-plus"></i> Agregar producto
+  </button>
+</div>
+
+<!-- Listado de dispositivos -->
+<ng-container *ngIf="!modoAgregar && !modoEdicion">
+  <div *ngIf="dispositivosPaginados.length > 0; else noDispositivos" class="row g-4">
+    <div *ngFor="let dispositivo of dispositivosPaginados" class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow position-relative">
+        <div class="position-relative">
+          <img [src]="dispositivo.imagenes && dispositivo.imagenes.length > 0 ? dispositivo.imagenes[0].url : ''" alt="Imagen dispositivo" class="card-img-top" style="height: 200px; object-fit: cover;">
+          <span *ngIf="dispositivo.estado === 1" class="badge bg-success position-absolute top-0 start-0 m-2 fs-6 px-3 py-2" style="z-index:2;">Disponible</span>
+          <span *ngIf="dispositivo.estado !== 1" class="badge bg-danger position-absolute top-0 start-0 m-2 fs-6 px-3 py-2" style="z-index:2;">No disponible</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title text-info">{{ dispositivo.nombre }}</h3>
+          <p><strong>Categoría:</strong> {{ dispositivo.categoria }}</p>
+          <p><strong>Marca:</strong> {{ dispositivo.marca }}</p>
+          <p><strong>Modelo:</strong> {{ dispositivo.modelo }}</p>
+          <p><strong>Precio:</strong> {{ dispositivo.precio | currency:'USD':'symbol':'1.0-0' }}</p>
+          <p class="card-text">{{ dispositivo.descripcion | slice:0:100 }}...</p>
+          <button (click)="verDispositivo(dispositivo)" class="btn btn-outline-info w-100 mb-2">Ver más</button>
+          <button *ngIf="tipoUsuario === 1 || tipoUsuario === 2" (click)="abrirCerrarModalEditar(dispositivo)" class="btn btn-outline-warning w-100">
+            <i class="fa fa-edit"></i> Editar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noDispositivos>
+    <p class="text-center text-muted">No hay dispositivos disponibles en este momento.</p>
+  </ng-template>
+</ng-container>
+
+<!-- Paginación centrada -->
+<div class="d-flex justify-content-center my-4" *ngIf="obtenerRango().length > 1">
+  <nav>
+    <ul class="pagination">
+      
+      <li class="page-item"><button (click)="paginar(-1)" [disabled]="esPrimeraPagina()" class="page-link"><i class="fas fa-chevron-left"></i></button></li>
+      <li class="page-item disabled"><span class="page-link">Página {{ currentPage + 1 }} de {{ obtenerRango().length }}</span></li>
+      <li class="page-item"><button (click)="paginar(1)" [disabled]="esUltimaPagina()" class="page-link"><i class="fas fa-chevron-right"></i></button></li>
+      
+    </ul>
+  </nav>
+</div>
+
+<!-- Modal para ver detalles de dispositivo -->
+<div *ngIf="currentDispositivo" class="modal fade show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5);" (click)="currentDispositivo = null">
+  <div class="modal-dialog modal-lg" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h2 class="modal-title">{{ currentDispositivo.nombre }}</h2>
+        <button type="button" class="btn-close" (click)="currentDispositivo = null"></button>
+      </div>
+      <div class="modal-body row g-4">
+        <div class="col-md-6">
+          <img [src]="currentDispositivo.imagenes && currentDispositivo.imagenes.length > 0 ? currentDispositivo.imagenes[bannerIndex].url : ''" alt="Dispositivo imagen" class="img-fluid rounded mb-2">
+          <div *ngIf="currentDispositivo.imagenes.length > 1" class="d-flex justify-content-center gap-2">
+            <span *ngFor="let img of currentDispositivo.imagenes; let i = index" [class]="'badge rounded-pill ' + (i === bannerIndex ? 'bg-info' : 'bg-secondary')" style="cursor:pointer;" (click)="bannerIndex = i"></span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Categoría:</strong> {{ currentDispositivo.categoria }}</p>
+          <p><strong>Marca:</strong> {{ currentDispositivo.marca }}</p>
+          <p><strong>Modelo:</strong> {{ currentDispositivo.modelo }}</p>
+          <p><strong>Precio:</strong> {{ currentDispositivo.precio | currency:'USD':'symbol':'1.0-0' }}</p>
+          <p><strong>Stock:</strong> {{ currentDispositivo.stock }}</p>
+          <p><strong>Descripción:</strong> {{ currentDispositivo.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario de edición de producto -->
+<div *ngIf="modoEdicion && dispositivoEditando" class="card p-4 mb-4">
+  <h4>Editar producto</h4>
+  <div class="mb-2">
+    <label>Nombre:</label>
+    <input class="form-control" [(ngModel)]="dispositivoEditando.nombre" />
+  </div>
+  <div class="mb-2">
+    <label>Categoría:</label>
+    <input class="form-control" [(ngModel)]="dispositivoEditando.categoria" />
+  </div>
+  <div class="mb-2">
+    <label>Marca:</label>
+    <input class="form-control" [(ngModel)]="dispositivoEditando.marca" />
+  </div>
+  <div class="mb-2">
+    <label>Modelo:</label>
+    <input class="form-control" [(ngModel)]="dispositivoEditando.modelo" />
+  </div>
+  <div class="mb-2">
+    <label>Precio:</label>
+    <input type="number" class="form-control" [(ngModel)]="dispositivoEditando.precio" />
+  </div>
+  <div class="mb-2">
+    <label>Descripción:</label>
+    <textarea class="form-control" [(ngModel)]="dispositivoEditando.descripcion"></textarea>
+  </div>
+  <div class="mb-2">
+    <label>Estado:</label>
+    <select class="form-control" [(ngModel)]="dispositivoEditando.estado">
+      <option [value]="1">Disponible</option>
+      <option [value]="0">No disponible</option>
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Imagen principal:</label>
+    <input class="form-control" [(ngModel)]="dispositivoEditando.imagenes[0].url" placeholder="URL de la imagen" />
+    <div *ngIf="dispositivoEditando.imagenes && dispositivoEditando.imagenes[0]?.url" class="mt-2">
+      <img [src]="dispositivoEditando.imagenes[0].url" alt="Imagen" style="max-width: 200px; max-height: 150px;">
+    </div>
+  </div>
+  <button class="btn btn-success me-2" (click)="editarDispositivo()">Guardar cambios</button>
+  <button class="btn btn-secondary" (click)="abrirCerrarModalEditar(null)">Cancelar</button>
+</div>
