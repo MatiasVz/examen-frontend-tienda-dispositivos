@@ -119,3 +119,12 @@ Edita `src/app/paginas/contactos/contactos.ts` con tus datos de servicio.
 - Angular CLI >= 20.x
 - TypeScript >= 5.8.x < 5.9.x
 
+## Demostración en Video
+
+Puedes ver el funcionamiento completo de la aplicación en el siguiente enlace:
+https://drive.google.com/drive/folders/1CV__0EaDBY7AxtOuttecwbbiK85R3bMP?usp=drive_link
+
+## Monitoreo de Métricas
+
+La aplicación cuenta con monitoreo habilitado mediante Spring Boot Actuator y VisualVM. Puedes acceder a las métricas de solicitudes HTTP desde:
+http://localhost:8081/actuator/metrics/http.server.requests
